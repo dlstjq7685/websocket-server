@@ -2,6 +2,9 @@ package core;
 
 import java.util.ArrayList;
 
+/**
+    Server base
+ */
 abstract public class base {
 
     private ArrayList<Integer> group_id;

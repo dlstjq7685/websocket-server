@@ -1,4 +1,10 @@
 package core.console;
 
-public class base {
+public class base implements Runnable{
+
+
+    @Override
+    public void run() {
+
+    }
 }

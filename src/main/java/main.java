@@ -23,6 +23,7 @@ public class main {
 
         try {
             t.join();
+            System.out.println("Close Server");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

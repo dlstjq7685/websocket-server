@@ -8,6 +8,11 @@ import java.util.function.Function;
 import static util.base.opcode_decoder;
 import static util.base.read_message;
 
+/**
+ * Client implement
+ * TODO LIST
+ *  group exchange func
+ */
 public class base implements Runnable{
 
     private Socket client;

@@ -16,6 +16,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Server implement
+ */
 public class extend extends base implements Runnable{
 
     private ServerSocket server;
@@ -135,9 +138,9 @@ public class extend extends base implements Runnable{
 
         if(data.contains("Cookie:")){
             System.out.println(data.indexOf("test-cookie="));
+            //cookie lang
             System.out.println(data.substring(416,420));
         }
-
     }
 
     /*
