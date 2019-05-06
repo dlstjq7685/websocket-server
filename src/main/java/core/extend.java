@@ -32,7 +32,7 @@ public class extend extends base implements Runnable{
      */
     public extend(){
         super();
-        group = new core.group.base();
+        group = new core.group.base("test-group");
     }
 
     public void print(String msg){

@@ -40,11 +40,11 @@ abstract public class base {
         log.print(meg);
     }
 
-    public void config_print(String meg){
+    void config_print(String meg){
         log.config_print(meg);
     }
 
-    public core.log.base getLog(){
+    core.log.base getLog(){
         return this.log;
     }
 

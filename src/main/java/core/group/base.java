@@ -13,9 +13,20 @@ public class base {
     private static final int MAX_AVAILABLE = 1;
     private Semaphore available;
 
+    /*
+        Group id
+     */
+    private String GID;
+    private String name;
+    private Integer root;
+    private ArrayList<Integer> child;
+
     {
         clients = new ArrayList<>();
         available = new Semaphore(MAX_AVAILABLE);
+    }
+    public base(String gid){
+        this.GID = gid;
     }
 
     private void group_send(byte[] message){
@@ -59,5 +70,19 @@ public class base {
 
     }
 
+    public String getGID() {
+        return GID;
+    }
 
+    public void setGID(String GID) {
+        this.GID = GID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
