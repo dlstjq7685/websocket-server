@@ -3,6 +3,7 @@ package core.client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.function.Function;
 
 import static util.base.opcode_decoder;
@@ -11,7 +12,9 @@ import static util.base.read_message;
 /**
  * Client implement
  * TODO LIST
- *  group exchange func
+ *  group manager
+ *      group-send
+ *      group-exit
  */
 public class base implements Runnable{
 
@@ -25,6 +28,9 @@ public class base implements Runnable{
     public Function callback_send;
     public Function callback_del;
 
+    private ArrayList<String> Group_entry;
+    private String current_channel;
+
     /**
      * buffer_size: 65535 byte
      */
@@ -34,7 +40,10 @@ public class base implements Runnable{
         client = null;
         in = null;
         run = false;
+        Group_entry = new ArrayList<>();
+        current_channel = "test_lobby";
     }
+
     public base(Socket c,core.log.base log)
     {
         setClient(c);

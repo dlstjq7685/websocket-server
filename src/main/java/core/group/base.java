@@ -18,8 +18,6 @@ public class base {
      */
     private String GID;
     private String name;
-    private Integer root;
-    private ArrayList<Integer> child;
 
     {
         clients = new ArrayList<>();
