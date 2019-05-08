@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * 1:n chat
  */
-public class channel extends base implements controller{
+public class channel extends base{
 
     private String root;
     private ArrayList<String> child;

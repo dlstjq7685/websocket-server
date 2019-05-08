@@ -1,6 +1,9 @@
 package core;
 
 //gradle fix
+import core.group.controller;
+import core.group.manager;
+
 import javax.xml.bind.DatatypeConverter;
 
 import java.io.IOException;
@@ -22,9 +25,8 @@ import java.util.regex.Pattern;
 public class extend extends base implements Runnable{
 
     private ServerSocket server;
-
-    private core.group.base group;
-
+    //    private core.group.base group;
+    private controller m;
     static final int portnum = 8000;
 
     /**
@@ -32,7 +34,7 @@ public class extend extends base implements Runnable{
      */
     public extend(){
         super();
-        group = new core.group.base("test-group");
+        m = new manager();
     }
 
     public void print(String msg){
@@ -61,9 +63,9 @@ public class extend extends base implements Runnable{
                 protocol_switch(client);
                 print("A client]\t"+ client.getRemoteSocketAddress() +"\tconnected.");
 
-                group.add_client(client);
-                core.client.base b = new core.client.base(client,this.getLog());
-                set_client(b);
+                m.client_wellcome(client);
+                //group.add_client(client);
+                core.client.base b = new core.client.base(client,this.getLog(),m);
 
                 Thread t = new Thread(b);
                 t.start();
@@ -72,11 +74,6 @@ public class extend extends base implements Runnable{
                 e.printStackTrace();
             }
         }
-    }
-
-    private void set_client(core.client.base b){
-        b.callback_del = group.del_client;
-        b.callback_send = group.send_callback;
     }
 
     private void protocol_switch(Socket client){

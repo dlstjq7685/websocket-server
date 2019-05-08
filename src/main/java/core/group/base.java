@@ -27,7 +27,7 @@ public class base {
         this.GID = gid;
     }
 
-    private void group_send(byte[] message){
+    public void group_send(byte[] message){
 
         clients.stream()
                 .forEach(c ->{
@@ -40,6 +40,7 @@ public class base {
                 });
     }
 
+    /*
     public Function<byte[], Boolean> send_callback = (byte[] message)-> {
         group_send(message);
         return true;
@@ -49,6 +50,7 @@ public class base {
         del_client(client);
         return true;
     };
+    */
 
     public void add_client(Socket c){
 
@@ -57,7 +59,7 @@ public class base {
         available.release();
     }
 
-    private void del_client(Socket c){
+    public void del_client(Socket c){
         try {
             available.acquire();
             clients.remove(c);

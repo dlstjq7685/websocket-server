@@ -1,5 +1,7 @@
 package core.client;
 
+import core.group.controller;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -25,12 +27,14 @@ public class base implements Runnable{
 
     private InputStream in;
 
+    /*
     public Function callback_send;
     public Function callback_del;
+    */
 
     private ArrayList<String> Group_entry;
     private String current_channel;
-
+    private controller sysm;
     /**
      * buffer_size: 65535 byte
      */
@@ -41,13 +45,15 @@ public class base implements Runnable{
         in = null;
         run = false;
         Group_entry = new ArrayList<>();
-        current_channel = "test_lobby";
+        current_channel = "lobby";
+        Group_entry.add(current_channel);
     }
 
-    public base(Socket c,core.log.base log)
+    public base(Socket c, core.log.base log, controller m)
     {
         setClient(c);
         this.log = log;
+        sysm = m;
     }
 
     public Socket getClient() {
@@ -91,10 +97,12 @@ public class base implements Runnable{
 
             if(flag){
                 byte[] message = read_message(set.clone());
-                this.callback_send.apply(message);
+                sysm.send_meg(current_channel,message);
+                // this.callback_send.apply(message);
             }else{
                 try {
-                    this.callback_del.apply(client);
+                    sysm.disconnect_client(Group_entry,client);
+                    // this.callback_del.apply(client);
                     client.close();
                     this.run = false;
                     this.print("client closed");
