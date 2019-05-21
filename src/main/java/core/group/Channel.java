@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * 1:n chat
  */
-public class channel extends base{
+public class Channel extends base{
 
     private String root;
     private ArrayList<String> child;
 
-    public channel(String gid) {
+    public Channel(String gid) {
         super(gid);
     }
 

@@ -1,8 +1,9 @@
 package core;
 
 //gradle fix
-import core.group.controller;
-import core.group.manager;
+import core.client.Base;
+import core.group.Controller;
+import core.group.Manager;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -26,7 +27,7 @@ public class extend extends base implements Runnable{
 
     private ServerSocket server;
     //    private core.group.base group;
-    private controller m;
+    private Controller m;
     static final int portnum = 8000;
 
     /**
@@ -34,7 +35,7 @@ public class extend extends base implements Runnable{
      */
     public extend(){
         super();
-        m = new manager();
+        m = new Manager();
     }
 
     public void print(String msg){
@@ -65,7 +66,7 @@ public class extend extends base implements Runnable{
 
                 m.client_wellcome(client);
                 //group.add_client(client);
-                core.client.base b = new core.client.base(client,this.getLog(),m);
+                Base b = new Base(client,this.getLog(),m);
 
                 Thread t = new Thread(b);
                 t.start();

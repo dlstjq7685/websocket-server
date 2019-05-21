@@ -8,20 +8,20 @@ import java.util.TreeMap;
  * required
  *  group change
  */
-public class manager implements controller{
+public class Manager implements Controller {
 
-    private TreeMap<String,channel> groups;
+    private TreeMap<String, Channel> groups;
 
-    public manager(){
+    public Manager(){
         groups = new TreeMap<>();
-        channel wellcome = new channel("lobby");
+        Channel wellcome = new Channel("lobby");
         wellcome.setName("lobby");
         groups.put("lobby",wellcome);
     }
 
     private void add_group(String Group_name,Socket client){
        if(!groups.containsKey(Group_name)){
-           channel dump = new channel(Group_name);
+           Channel dump = new Channel(Group_name);
            dump.add_client(client);
            groups.put(Group_name,dump);
            //ok
@@ -47,7 +47,7 @@ public class manager implements controller{
 
     //almost not use
     private void emergency_send(byte[] meg){
-        for(channel e: groups.values()){
+        for(Channel e: groups.values()){
             e.group_send(meg);
         }
     }

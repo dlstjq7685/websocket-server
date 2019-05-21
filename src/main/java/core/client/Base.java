@@ -1,15 +1,14 @@
 package core.client;
 
-import core.group.controller;
+import core.group.Controller;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.function.Function;
 
-import static util.base.opcode_decoder;
-import static util.base.read_message;
+import static util.Base.opcode_decoder;
+import static util.Base.read_message;
 
 /**
  * Client implement
@@ -18,7 +17,7 @@ import static util.base.read_message;
  *      group-send
  *      group-exit
  */
-public class base implements Runnable{
+public class Base implements Runnable{
 
     private Socket client;
     private int group_id;
@@ -34,7 +33,7 @@ public class base implements Runnable{
 
     private ArrayList<String> Group_entry;
     private String current_channel;
-    private controller sysm;
+    private Controller sysm;
     /**
      * buffer_size: 65535 byte
      */
@@ -49,7 +48,7 @@ public class base implements Runnable{
         Group_entry.add(current_channel);
     }
 
-    public base(Socket c, core.log.base log, controller m)
+    public Base(Socket c, core.log.base log, Controller m)
     {
         setClient(c);
         this.log = log;

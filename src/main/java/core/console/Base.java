@@ -1,6 +1,6 @@
 package core.console;
 
-public class base implements Runnable{
+public class Base implements Runnable{
 
 
     @Override

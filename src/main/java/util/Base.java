@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.Socket;
 
-public class base {
+public class Base {
 
     public static byte[] read_message(byte[] buffer){
 
