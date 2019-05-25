@@ -1,58 +1,48 @@
 package core.client;
 
 import core.group.Controller;
+import core.key.ClientKey;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import static util.Base.opcode_decoder;
-import static util.Base.read_message;
+import static util.MessageFactory.*;
 
 /**
  * Client implement
  * TODO LIST
  *  group manager
- *      group-send
- *      group-exit
+ *      group-send: ok
+ *      group-exit: ok
  */
-public class Base implements Runnable{
+public class Base extends Thread{
 
     private Socket client;
-    private int group_id;
     private boolean run;
-    private core.log.base log;
+    private core.log.Base log;
 
     private InputStream in;
 
-    /*
-    public Function callback_send;
-    public Function callback_del;
-    */
-
-    private ArrayList<String> Group_entry;
-    private String current_channel;
-    private Controller sysm;
-    /**
-     * buffer_size: 65535 byte
-     */
-    static final int buffer_size = 65535;
+    private ArrayList<String> groupEntry;
+    private String currentChannel;
+    private Controller sendManager;
 
     {
         client = null;
         in = null;
         run = false;
-        Group_entry = new ArrayList<>();
-        current_channel = "lobby";
-        Group_entry.add(current_channel);
+        groupEntry = new ArrayList<>();
+        currentChannel = ClientKey.TESTCHANNEL;
+        groupEntry.add(currentChannel);
     }
 
-    public Base(Socket c, core.log.base log, Controller m)
+    public Base(Socket c, core.log.Base log, Controller m)
     {
         setClient(c);
         this.log = log;
-        sysm = m;
+        this.sendManager = m;
     }
 
     public Socket getClient() {
@@ -69,15 +59,6 @@ public class Base implements Runnable{
         }
     }
 
-    public int getGroup_id() {
-        return group_id;
-    }
-
-    public void setGroup_id(int group_id) {
-        this.group_id = group_id;
-    }
-
-
     @Override
     public void run() {
 
@@ -85,23 +66,23 @@ public class Base implements Runnable{
 
         while (this.run){
 
-            byte[] set = new byte[buffer_size];
+            byte[] set = new byte[ClientKey.BUFFERSIZE];
             try {
                 in.read(set);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            boolean flag = opcode_decoder(set[0]);
+            boolean flag = opcodeDecoder(set[0]);
 
             if(flag){
-                byte[] message = read_message(set.clone());
-                sysm.send_meg(current_channel,message);
-                // this.callback_send.apply(message);
+                byte[] message = readMessage(set.clone());
+                sendManager.sendMeg(currentChannel,message);
+
             }else{
                 try {
-                    sysm.disconnect_client(Group_entry,client);
-                    // this.callback_del.apply(client);
+                    sendManager.disconnectClient(groupEntry,client);
+
                     client.close();
                     this.run = false;
                     this.print("client closed");
@@ -113,10 +94,6 @@ public class Base implements Runnable{
 
         client = null;
 
-    }
-
-    public void setLog(core.log.base log) {
-        this.log = log;
     }
 
     private void print(String message){

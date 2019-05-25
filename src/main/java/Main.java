@@ -1,6 +1,6 @@
-import core.extend;
+import core.Extend;
 
-public class main {
+public class Main {
 
     /*
         TODO List:
@@ -17,7 +17,7 @@ public class main {
      */
     public static void main(String... args){
 
-        extend main = new extend();
+        Extend main = new Extend();
         Thread t = new Thread(main,"main");
         t.start();
 

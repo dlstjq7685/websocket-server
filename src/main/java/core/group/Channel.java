@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * 1:n chat
  */
-public class Channel extends base{
+public class Channel extends Base {
 
     private String root;
     private ArrayList<String> child;

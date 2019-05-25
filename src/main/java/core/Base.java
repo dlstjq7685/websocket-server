@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
     Server base
  */
-abstract public class base {
+abstract public class Base extends Thread {
 
     private ArrayList<Integer> group_id;
-    private core.log.base log;
+    private core.log.Base log;
 
-    public base(){
-        log = new core.log.base();
+    public Base(){
+        log = new core.log.Base();
 
         group_id = new ArrayList<>();
     }
@@ -44,7 +44,7 @@ abstract public class base {
         log.config_print(meg);
     }
 
-    core.log.base getLog(){
+    core.log.Base getLog(){
         return this.log;
     }
 

@@ -19,7 +19,7 @@ public class Manager implements Controller {
         groups.put("lobby",wellcome);
     }
 
-    private void add_group(String Group_name,Socket client){
+    private void addGroup(String Group_name,Socket client){
        if(!groups.containsKey(Group_name)){
            Channel dump = new Channel(Group_name);
            dump.add_client(client);
@@ -31,7 +31,7 @@ public class Manager implements Controller {
        }
     }
 
-    private void channel_send(String key,byte[] meg){
+    private void channelSend(String key,byte[] meg){
         if(groups.containsKey(key)){
            groups.get(key).group_send(meg);
         }else{
@@ -39,7 +39,7 @@ public class Manager implements Controller {
         }
     }
 
-    private void channel_exit(String key, Socket client){
+    private void channelExit(String key, Socket client){
         if(groups.containsKey(key)) {
             groups.get(key).del_client(client);
         }
@@ -53,19 +53,19 @@ public class Manager implements Controller {
     }
 
     @Override
-    public void client_wellcome(Socket client) {
-        this.add_group("lobby",client);
+    public void clientWellcome(Socket client) {
+        this.addGroup("lobby",client);
     }
 
     @Override
-    public void send_meg(String gname, byte[] message) {
-        channel_send(gname,message);
+    public void sendMeg(String gname, byte[] message) {
+        channelSend(gname,message);
     }
 
     @Override
-    public void disconnect_client(ArrayList<String> groups, Socket client) {
+    public void disconnectClient(ArrayList<String> groups, Socket client) {
         for(String name: groups){
-            channel_exit(name,client);
+            channelExit(name,client);
         }
     }
 

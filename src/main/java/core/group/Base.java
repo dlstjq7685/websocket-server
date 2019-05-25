@@ -5,9 +5,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
-import java.util.function.Function;
 
-public class base {
+public class Base {
 
     private ArrayList<Socket> clients;
     private static final int MAX_AVAILABLE = 1;
@@ -23,7 +22,7 @@ public class base {
         clients = new ArrayList<>();
         available = new Semaphore(MAX_AVAILABLE);
     }
-    public base(String gid){
+    public Base(String gid){
         this.GID = gid;
     }
 
@@ -39,18 +38,6 @@ public class base {
                     }
                 });
     }
-
-    /*
-    public Function<byte[], Boolean> send_callback = (byte[] message)-> {
-        group_send(message);
-        return true;
-    };
-
-    public Function<Socket, Boolean> del_client = (Socket client)-> {
-        del_client(client);
-        return true;
-    };
-    */
 
     public void add_client(Socket c){
 

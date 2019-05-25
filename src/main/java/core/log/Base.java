@@ -1,19 +1,20 @@
 package core.log;
 
+import core.key.LogKey;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.TimeZone;
 import java.util.logging.*;
 
-public class base {
+public class Base {
 
-    static final Logger logger = Logger.getLogger(base.class.getName());
-    static final String filePath = "./log/server.log";
+    private static final Logger logger = Logger.getLogger(Base.class.getName());
 
     {
         try {
 
-            FileHandler fileHandler = new FileHandler(filePath, false);
+            FileHandler fileHandler = new FileHandler(LogKey.logPath, false);
             fileHandler.setFormatter(new SimpleFormatter());
             logger.addHandler(fileHandler);
             logger.setLevel(Level.FINE);
@@ -33,7 +34,7 @@ public class base {
     }
 
 
-    public base(){
+    public Base(){
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 

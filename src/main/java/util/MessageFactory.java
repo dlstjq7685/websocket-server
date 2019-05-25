@@ -2,18 +2,15 @@ package util;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.Socket;
+public class MessageFactory {
 
-public class Base {
+    public static byte[] readMessage(byte[] buffer){
 
-    public static byte[] read_message(byte[] buffer){
-
-        opcode_decoder(buffer[0]);
-        long payloadlen = get_length(buffer);
-        int payload_byte = get_payload_byte(payloadlen);
-        int[] temp = makeunsigned(buffer,6 + payloadlen + payload_byte);
-        int[] key = makekey(temp,payload_byte);
+        opcodeDecoder(buffer[0]);
+        long payloadlen = getLength(buffer);
+        int payload_byte = getPayloadByte(payloadlen);
+        int[] temp = makeUnsigned(buffer,6 + payloadlen + payload_byte);
+        int[] key = makeKey(temp,payload_byte);
         int[] encoded = makeencoded(temp,payloadlen,payload_byte);
 
         byte[] send = decode(key,encoded,payloadlen);
@@ -39,7 +36,7 @@ public class Base {
      * @param len: payload
      * @return
      */
-    private static int get_payload_byte(long len){
+    private static int getPayloadByte(long len){
 
         int byte_len = 0;
 
@@ -54,7 +51,7 @@ public class Base {
      * @param len: packet
      * @return: length
      */
-    private static long get_length(byte...len){
+    private static long getLength(byte...len){
 
         long leng = len[1] & 0x7F;
         // System.out.println(leng);
@@ -72,7 +69,7 @@ public class Base {
      * @param opcode: websocket opcode byte= buffer[0]
      *
      */
-    public static boolean opcode_decoder(byte opcode){
+    public static boolean opcodeDecoder(byte opcode){
         byte decoded = (byte) (opcode &  0x0F);
         // System.out.println("OPCODE: "+Byte.toUnsignedInt(opcode));
 
@@ -126,7 +123,7 @@ public class Base {
      * @param len payload data length in byte data
      * @return
      */
-    public static int[] makeunsigned(byte[] data, long len){
+    public static int[] makeUnsigned(byte[] data, long len){
         int[] dump = new int[Math.toIntExact(len)];
 
         int mask = 0xFF;
@@ -145,7 +142,7 @@ public class Base {
      * @param data converted client data
      * @return
      */
-    public static int[] makekey(int[] data,int payload_byte_len){
+    public static int[] makeKey(int[] data,int payload_byte_len){
 
         switch (payload_byte_len){
             case 0:
