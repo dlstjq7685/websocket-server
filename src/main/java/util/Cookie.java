@@ -16,11 +16,12 @@ class Cookie {
 
         if(data.contains("Cookie:")){
 
-            int start = data.indexOf(key + "=");
-            // CookieKey.COOKIELENGTH
-            contents = data.substring(start,start + cookieLen);
+            int start = data.indexOf(key + "=") + key.length() + 1;
 
-            System.out.println(contents);
+            //get client cookie
+            contents = data.substring(start,start + CookieKey.COOKIELENGTH);
+
+            //System.out.println(contents);
 
         }
 
@@ -38,4 +39,13 @@ class Cookie {
         return cal.getTime().toString();
     }
 
+    static String getCookieContent(String key,boolean sha512){
+
+        if(sha512){
+            return Hash.getSHA512(key);
+        }
+        else{
+            return Hash.getSHA256(key);
+        }
+    }
 }

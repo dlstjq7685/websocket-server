@@ -48,12 +48,13 @@ public class ProtocolSwitch {
                 //if required browser cookie, here cookie set.
                 cookieFlow(data, CookieKey.TESTCOOKIE);
                 String e = getExpiredtime();
+                String cookieContent = Cookie.getCookieContent("testkey",false);
 
                 /*
                     Set-Cookie: <cookieName>=<Value>;Expires=<Date>\r\m
                 * */
                 byte[] response = ("HTTP/1.1 101 Switching Protocols\r\n"
-                        + "Set-Cookie: test-cookie=test;Expires=" +e+"\r\n"
+                        + "Set-Cookie: test-cookie=" + cookieContent + ";Expires=" +e+"\r\n"
                         + "Connection: Upgrade\r\n"
                         + "Upgrade: websocket\r\n"
                         + "Sec-WebSocket-Accept: "
