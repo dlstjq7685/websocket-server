@@ -37,7 +37,7 @@ abstract public class Base extends Thread {
     }
 
     public void print(String meg){
-        log.print(meg);
+        log.info_print(meg);
     }
 
     void config_print(String meg){

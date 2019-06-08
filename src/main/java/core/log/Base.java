@@ -9,10 +9,11 @@ import java.util.logging.*;
 
 public class Base {
 
-    private static final Logger logger = Logger.getLogger(Base.class.getName());
+    private Logger logger;
 
     {
         try {
+            logger = Logger.getLogger("WebSocket-Server");
 
             FileHandler fileHandler = new FileHandler(LogKey.logPath, false);
             fileHandler.setFormatter(new SimpleFormatter());

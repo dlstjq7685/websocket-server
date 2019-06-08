@@ -15,7 +15,6 @@ public class Manager implements Controller {
     public Manager(){
         groups = new TreeMap<>();
         Channel wellcome = new Channel("lobby");
-        wellcome.setName("lobby");
         groups.put("lobby",wellcome);
     }
 
@@ -68,5 +67,4 @@ public class Manager implements Controller {
             channelExit(name,client);
         }
     }
-
 }

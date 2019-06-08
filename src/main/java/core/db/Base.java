@@ -7,6 +7,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ *  TODO List
+ *      - createLockSql
+ *      - createSelectSql
+ *      - createUpdateSql
+ *      - createInsertSql
+ *      -!createDeleteSql
+ *
+ */
 public class Base {
 
     private Connection c;
@@ -15,7 +24,6 @@ public class Base {
     public Base() {
 
     }
-
 
     private void connectionDB(){
         try {
@@ -59,7 +67,6 @@ public class Base {
 
         return true;
     }
-
 
     private void searchTable(String sql){
 

@@ -5,6 +5,11 @@ import core.key.CookieKey;
 import java.util.Calendar;
 import java.util.Date;
 
+
+/**
+ *  Todo List
+ *      - get cookie saved info from DB
+ */
 class Cookie {
 
     private final static int cookieLen = 4;

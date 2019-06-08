@@ -12,11 +12,7 @@ public class Base {
     private static final int MAX_AVAILABLE = 1;
     private Semaphore available;
 
-    /*
-        Group id
-     */
     private String GID;
-    private String name;
 
     {
         clients = new ArrayList<>();
@@ -59,17 +55,5 @@ public class Base {
 
     public String getGID() {
         return GID;
-    }
-
-    public void setGID(String GID) {
-        this.GID = GID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

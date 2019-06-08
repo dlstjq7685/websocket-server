@@ -16,7 +16,7 @@ public class Extend extends Base {
 
     private ServerSocket server;
     private Controller m;
-    static final int portnum = 8000;
+    private static final int portnum = 8000;
 
     /**
      * mode: Dev or Dep
@@ -51,8 +51,8 @@ public class Extend extends Base {
                 Socket client = server.accept();
                 protocolSwitch(client);
                 print("A client]\t"+ client.getRemoteSocketAddress() +"\tconnected.");
-
                 m.clientWellcome(client);
+
                 core.client.Base b = new core.client.Base(client,this.getLog(),m);
 
                 Thread t = new Thread(b);

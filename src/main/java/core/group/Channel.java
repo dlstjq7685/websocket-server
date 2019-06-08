@@ -15,5 +15,19 @@ public class Channel extends Base {
     }
 
 
+    public String getRoot() {
+        return root;
+    }
 
+    public void setRoot(String root) {
+        this.root = root;
+    }
+
+    public ArrayList<String> getChild() {
+        return child;
+    }
+
+    public void setChild(ArrayList<String> child) {
+        this.child = child;
+    }
 }

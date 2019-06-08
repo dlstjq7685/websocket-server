@@ -2,6 +2,7 @@ package core.client;
 
 import core.group.Controller;
 import core.key.ClientKey;
+import serverException.socketError;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,9 +14,6 @@ import static util.MessageFactory.*;
 /**
  * Client implement
  * TODO LIST
- *  group manager
- *      group-send: ok
- *      group-exit: ok
  */
 public class Base extends Thread{
 
@@ -64,32 +62,31 @@ public class Base extends Thread{
 
         this.run = true;
 
-        while (this.run){
+        try {
+            while (this.run){
 
-            byte[] set = new byte[ClientKey.BUFFERSIZE];
-            try {
+                byte[] set = new byte[ClientKey.BUFFERSIZE];
                 in.read(set);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-            boolean flag = opcodeDecoder(set[0]);
+                boolean flag = opcodeDecoder(set[0]);
 
-            if(flag){
-                byte[] message = readMessage(set.clone());
-                sendManager.sendMeg(currentChannel,message);
+                if(flag){
+                    byte[] message = readMessage(set.clone());
+                    sendManager.sendMeg(currentChannel,message);
 
-            }else{
-                try {
+                }else{
                     sendManager.disconnectClient(groupEntry,client);
 
                     client.close();
                     this.run = false;
                     this.print("client closed");
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (socketError e1) {
+            e1.printStackTrace();
         }
 
         client = null;
@@ -97,6 +94,6 @@ public class Base extends Thread{
     }
 
     private void print(String message){
-        log.print(client.getRemoteSocketAddress() + "]\t"+ message);
+        log.info_print(client.getRemoteSocketAddress() + "]\t"+ message);
     }
 }

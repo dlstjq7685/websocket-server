@@ -1,12 +1,16 @@
 package util;
 
 import org.json.JSONObject;
+import serverException.socketError;
 
 public class MessageFactory {
 
-    public static byte[] readMessage(byte[] buffer){
+    public static byte[] readMessage(byte[] buffer) throws socketError {
 
-        opcodeDecoder(buffer[0]);
+        if (opcodeDecoder(buffer[0])) {
+           throw new socketError("E3001");
+        }
+
         long payloadlen = getLength(buffer);
         int payload_byte = getPayloadByte(payloadlen);
         int[] temp = makeUnsigned(buffer,6 + payloadlen + payload_byte);
