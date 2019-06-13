@@ -3,6 +3,7 @@ package core.client;
 import core.group.Controller;
 import core.key.ClientKey;
 import serverException.socketError;
+import util.MessageFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +48,7 @@ public class Base extends Thread{
         return client;
     }
 
-    public void setClient(Socket client) {
+    public synchronized void setClient(Socket client) {
         this.client = client;
 
         try {
@@ -68,10 +69,10 @@ public class Base extends Thread{
                 byte[] set = new byte[ClientKey.BUFFERSIZE];
                 in.read(set);
 
-                boolean flag = opcodeDecoder(set[0]);
+                boolean flag = MessageFactory.getInstance().opcodeDecoder(set[0]);
 
                 if(flag){
-                    byte[] message = readMessage(set.clone());
+                    byte[] message = MessageFactory.getInstance().readMessage(set.clone());
                     sendManager.sendMeg(currentChannel,message);
 
                 }else{

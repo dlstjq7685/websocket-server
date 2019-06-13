@@ -10,7 +10,7 @@ import java.util.TreeMap;
  */
 public class Manager implements Controller {
 
-    private TreeMap<String, Channel> groups;
+    private final TreeMap<String, Channel> groups;
 
     public Manager(){
         groups = new TreeMap<>();

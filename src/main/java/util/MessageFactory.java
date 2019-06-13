@@ -5,33 +5,43 @@ import serverException.socketError;
 
 public class MessageFactory {
 
-    public static byte[] readMessage(byte[] buffer) throws socketError {
+    private static MessageFactory mf = new MessageFactory();
 
+    private MessageFactory() {}
+
+    public static MessageFactory getInstance() {
+        return mf;
+    }
+
+    public byte[] readMessage(byte[] buffer) throws socketError {
+
+        /*
         if (opcodeDecoder(buffer[0])) {
            throw new socketError("E3001");
         }
+         */
 
-        long payloadlen = getLength(buffer);
-        int payload_byte = getPayloadByte(payloadlen);
-        int[] temp = makeUnsigned(buffer,6 + payloadlen + payload_byte);
-        int[] key = makeKey(temp,payload_byte);
-        int[] encoded = makeencoded(temp,payloadlen,payload_byte);
+        long payloadlen = this.getLength(buffer);
+        int payload_byte = this.getPayloadByte(payloadlen);
+        int[] temp = this.makeUnsigned(buffer,6 + payloadlen + payload_byte);
+        int[] key = this.makeKey(temp,payload_byte);
+        int[] encoded = this.makeencoded(temp,payloadlen,payload_byte);
 
-        byte[] send = decode(key,encoded,payloadlen);
+        byte[] send = this.decode(key,encoded,payloadlen);
 
         // StringtoJson(new String(send));
         // System.out.println(t.get("data"));
 
-        byte[] message = makemessage(send,payloadlen);
+        byte[] message = this.makemessage(send,payloadlen);
 
         return message;
     }
 
-    private static JSONObject StringtoJson(String str){
+    private JSONObject StringtoJson(String str){
         return new JSONObject(str);
     }
 
-    private static String JsontoString(JSONObject json){
+    private String JsontoString(JSONObject json){
         return json.toString();
     }
 
@@ -40,7 +50,7 @@ public class MessageFactory {
      * @param len: payload
      * @return
      */
-    private static int getPayloadByte(long len){
+    private int getPayloadByte(long len){
 
         int byte_len = 0;
 
@@ -55,7 +65,7 @@ public class MessageFactory {
      * @param len: packet
      * @return: length
      */
-    private static long getLength(byte...len){
+    private long getLength(byte...len){
 
         long leng = len[1] & 0x7F;
         // System.out.println(leng);
@@ -73,7 +83,7 @@ public class MessageFactory {
      * @param opcode: websocket opcode byte= buffer[0]
      *
      */
-    public static boolean opcodeDecoder(byte opcode){
+    public boolean opcodeDecoder(byte opcode){
         byte decoded = (byte) (opcode &  0x0F);
         // System.out.println("OPCODE: "+Byte.toUnsignedInt(opcode));
 
@@ -103,7 +113,7 @@ public class MessageFactory {
      * @param len
      * @return
      */
-    private static byte[] decode(int[] key,int[] encoded, long len){
+    private byte[] decode(int[] key,int[] encoded, long len){
 
         int[] decoded = new int[Math.toIntExact(len)];
         byte[] dump = new byte[Math.toIntExact(len)];
@@ -127,7 +137,7 @@ public class MessageFactory {
      * @param len payload data length in byte data
      * @return
      */
-    public static int[] makeUnsigned(byte[] data, long len){
+    public int[] makeUnsigned(byte[] data, long len){
         int[] dump = new int[Math.toIntExact(len)];
 
         int mask = 0xFF;
@@ -146,7 +156,7 @@ public class MessageFactory {
      * @param data converted client data
      * @return
      */
-    public static int[] makeKey(int[] data,int payload_byte_len){
+    public int[] makeKey(int[] data,int payload_byte_len){
 
         switch (payload_byte_len){
             case 0:
@@ -167,7 +177,7 @@ public class MessageFactory {
      * @param len payload data length in client data[1]
      * @return
      */
-    public static int[] makeencoded(int[] data, long len,int payload_byte_len){
+    public int[] makeencoded(int[] data, long len,int payload_byte_len){
 
         int[] dump = new int[Math.toIntExact(len)];
         int mesg_len = 6 + payload_byte_len;
@@ -185,7 +195,7 @@ public class MessageFactory {
      * @param len decoded message length
      * @return
      */
-    public static byte[] makemessage(byte[] message,long len){
+    public byte[] makemessage(byte[] message,long len){
 
         byte[] meg = new byte[Math.toIntExact(len + 2)];
         int len_frame = 2;
