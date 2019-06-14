@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import static core.log.Base.logger;
+
 /**
  * Client implement
  * TODO LIST
@@ -18,7 +20,6 @@ public class Base extends Thread{
 
     private Socket client;
     private boolean run;
-    private core.log.Base log;
 
     private InputStream in;
 
@@ -35,10 +36,9 @@ public class Base extends Thread{
         groupEntry.add(currentChannel);
     }
 
-    public Base(Socket c, core.log.Base log, Controller m)
+    public Base(Socket c, Controller m)
     {
         setClient(c);
-        this.log = log;
         this.sendManager = m;
     }
 
@@ -93,6 +93,6 @@ public class Base extends Thread{
     }
 
     private void print(String message){
-        log.info_print(client.getRemoteSocketAddress() + "]\t"+ message);
+        logger.info(client.getRemoteSocketAddress() + "]\t"+ message);
     }
 }

@@ -2,10 +2,7 @@ package core.db;
 
 import core.key.DataBaseKey;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 /**
  *  TODO List
@@ -21,44 +18,60 @@ public class Base {
     private Connection c;
     private PreparedStatement p;
 
-    public Base() {
 
+    public Base() {
+        this.connectionDB();
     }
 
     private void connectionDB(){
         try {
-            Class.forName("org.sqlite.JDBC");
+            Class.forName(DataBaseKey.dbSQLITE);
             c = DriverManager.getConnection(DataBaseKey.dbPath);
             c.setAutoCommit(false);
 
-        } catch ( Exception e ) {
+        } catch (SQLException | ClassNotFoundException e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        System.out.println("Opened database successfully");
     }
 
-    private  void closeDB(){
+    public void closeDB(){
         try{
-            c.close();
-        }catch ( Exception e ) {
+            if( c != null) {
+                c.close();
+            }
+
+            if ( p != null) {
+                p.close();
+            }
+        }catch ( SQLException e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
     }
 
-    private boolean createTable(){
+    private boolean createTable(String tableName){
         try {
-            String sql = "CREATE TABLE COMPANY " +
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("CREATE TABLE ? (  \n");
+
+            sql.append("");
+            sql.append("");
+            sql.append("");
+            sql.append("");
+            sql.append("    )");
+
+            String sql1 = "CREATE TABLE COMPANY " +
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " NAME           TEXT    NOT NULL, " +
                     " AGE            INT     NOT NULL, " +
                     " ADDRESS        CHAR(50), " +
                     " SALARY         REAL)";
 
-            p = c.prepareStatement(sql);
-            p.setString(1,sql);
-            ResultSet rs = p.executeQuery(sql);
+            p = c.prepareStatement(sql.toString());
+            // p.setString(1,sql);
+            ResultSet rs = p.executeQuery();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);

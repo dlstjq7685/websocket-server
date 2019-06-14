@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static core.log.Base.logger;
 import static util.ProtocolSwitch.protocolSwitch;
 
 /**
@@ -23,11 +24,8 @@ public class Extend extends Base {
      */
     public Extend(){
         super();
+        new core.log.Base().initalLog();
         m = new Manager();
-    }
-
-    public void print(String msg){
-        super.print(msg);
     }
 
     /**
@@ -43,17 +41,17 @@ public class Extend extends Base {
             System.exit(0);
         }
 
-        super.config_print("Server has started on 127.0.0.1:" + portnum);
-        print("Waiting for a connection...");
+        logger.config("Server has started on 127.0.0.1:" + portnum);
+        logger.info("Waiting for a connection...");
 
         while (!Thread.interrupted()){
             try {
                 Socket client = server.accept();
                 protocolSwitch(client);
-                print("A client]\t"+ client.getRemoteSocketAddress() +"\tconnected.");
+                logger.info("A client]\t"+ client.getRemoteSocketAddress() +"\tconnected.");
                 m.clientWellcome(client);
 
-                core.client.Base b = new core.client.Base(client,this.getLog(),m);
+                core.client.Base b = new core.client.Base(client,m);
 
                 Thread t = new Thread(b);
                 t.start();

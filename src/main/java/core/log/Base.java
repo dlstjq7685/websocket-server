@@ -9,11 +9,11 @@ import java.util.logging.*;
 
 public class Base {
 
-    private Logger logger;
+    public static final Logger logger = Logger.getLogger("WebSocket-Server");;
 
-    {
+    public void initalLog() {
+
         try {
-            logger = Logger.getLogger("WebSocket-Server");
 
             FileHandler fileHandler = new FileHandler(LogKey.logPath, false);
             fileHandler.setFormatter(new SimpleFormatter());
@@ -25,6 +25,8 @@ public class Base {
             logger.addHandler(consoleHandler);
 
             logger.setUseParentHandlers(false);
+
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
@@ -35,31 +37,4 @@ public class Base {
     }
 
 
-    public Base(){
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
-
-    /**
-     * Default Fine logger
-     * @param message
-     */
-    public void print(String message){
-        logger.fine(message);
-    }
-
-    public void wn_print(String message){
-        logger.warning(message);
-    }
-
-    public void error_print(String message){
-        logger.severe(message);
-    }
-
-    public void config_print(String message){
-        logger.config(message);
-    }
-
-    public void info_print(String message){
-        logger.info(message);
-    }
 }
