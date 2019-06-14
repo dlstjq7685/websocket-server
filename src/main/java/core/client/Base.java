@@ -10,8 +10,6 @@ import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import static util.MessageFactory.*;
-
 /**
  * Client implement
  * TODO LIST

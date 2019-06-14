@@ -2,7 +2,6 @@ package core;
 
 import core.group.Controller;
 import core.group.Manager;
-import serverException.socketError;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -1,6 +1,5 @@
 package util;
 
-import org.json.JSONObject;
 import serverException.socketError;
 
 public class MessageFactory {
@@ -33,14 +32,6 @@ public class MessageFactory {
         byte[] message = this.makemessage(send,payloadlen);
 
         return message;
-    }
-
-    private JSONObject StringtoJson(String str){
-        return new JSONObject(str);
-    }
-
-    private String JsontoString(JSONObject json){
-        return json.toString();
     }
 
     /**
