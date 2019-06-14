@@ -3,6 +3,7 @@ package util;
 
 //gradle fix
 import core.key.CookieKey;
+import serverException.socketError;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -21,7 +22,7 @@ import static util.Cookie.getExpiredtime;
 
 public class ProtocolSwitch {
 
-    public static void protocolSwitch(Socket client){
+    public static void protocolSwitch(Socket client) throws socketError {
 
         /**
          * Websocket protocol switching
@@ -48,7 +49,7 @@ public class ProtocolSwitch {
                 //if required browser cookie, here cookie set.
                 cookieFlow(data, CookieKey.TESTCOOKIE);
                 String e = getExpiredtime();
-                String cookieContent = Cookie.getCookieContent("testkey",false);
+                String cookieContent = new String(Hash.generateHash(CookieKey.TESTCOOKIE));
 
                 /*
                     Set-Cookie: <cookieName>=<Value>;Expires=<Date>\r\m

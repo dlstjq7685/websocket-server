@@ -2,6 +2,7 @@ package core;
 
 import core.group.Controller;
 import core.group.Manager;
+import serverException.socketError;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -60,6 +61,8 @@ public class Extend extends Base {
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (serverException.socketError socketError) {
+                socketError.printStackTrace();
             }
         }
     }

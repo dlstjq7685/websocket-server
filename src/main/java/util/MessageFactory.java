@@ -15,11 +15,9 @@ public class MessageFactory {
 
     public byte[] readMessage(byte[] buffer) throws socketError {
 
-        /*
-        if (opcodeDecoder(buffer[0])) {
-           throw new socketError("E3001");
+        if (!opcodeDecoder(buffer.clone()[0])) {
+            throw new socketError("E3001");
         }
-         */
 
         long payloadlen = this.getLength(buffer);
         int payload_byte = this.getPayloadByte(payloadlen);

@@ -1,25 +1,23 @@
 package core.authentication;
 
-import static util.Hash.getSHA256;
-import static util.Hash.getSHA512;
+
+import serverException.socketError;
+import util.Hash;
+
+import java.io.UnsupportedEncodingException;
 
 public class Password {
 
     private String password;
-    private boolean type;
-
+    private byte[] salt;
 
     public Password(String password) {
         this.password = password;
-        type = true;
+        salt = null;
     }
 
-    public String getPassword() {
-        if (type) {
-            return getSHA256(this.password);
-        } else {
-            return getSHA512(this.password);
-        }
+    public String getPassword() throws socketError, UnsupportedEncodingException {
+        return new String(Hash.generateHash(password),"UTF-8");
     }
 
 }

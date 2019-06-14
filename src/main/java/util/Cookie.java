@@ -2,6 +2,7 @@ package util;
 
 import core.key.CookieKey;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,13 +13,11 @@ import java.util.Date;
  */
 class Cookie {
 
-    private final static int cookieLen = 4;
 
     static String cookieFlow(String data, String key){
 
         String contents = null;
         //System.out.println(data);
-
         if(data.contains("Cookie:")){
 
             int start = data.indexOf(key + "=") + key.length() + 1;
@@ -26,10 +25,9 @@ class Cookie {
             //get client cookie
             contents = data.substring(start,start + CookieKey.COOKIELENGTH);
 
-            //System.out.println(contents);
+            //System.out.println(contents.getBytes("UTF-8").length);
 
         }
-
         return contents;
     }
 
@@ -42,15 +40,5 @@ class Cookie {
         cal.add(Calendar.HOUR_OF_DAY, 1);  // adds one hour
 
         return cal.getTime().toString();
-    }
-
-    static String getCookieContent(String key,boolean sha512){
-
-        if(sha512){
-            return Hash.getSHA512(key);
-        }
-        else{
-            return Hash.getSHA256(key);
-        }
     }
 }
